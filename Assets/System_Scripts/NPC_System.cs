@@ -5,6 +5,7 @@ using TMPro;
 using System.IO;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class DialogueData
@@ -19,13 +20,23 @@ public class NPC_System : MonoBehaviour
     [SerializeField] public GameObject canvas;
     [SerializeField] public GameObject notification;
     [SerializeField] public ThirdPersonCharacter player;
-    [SerializeField] public TextAsset dialogueJSON;
+    [SerializeField] public bool isLeft = true;
+    [SerializeField] public TextAsset dialogueJSONL;
+    [SerializeField] public TextAsset dialogueJSONR;
+    [SerializeField] public Entered left;
+    [SerializeField] public Entered right;
 
     private DialogueData dialogues; // Store dialogues from JSON
 
     private void Start()
     {
         LoadDialoguesFromJSON();
+        // set random seed
+        System.Random rand = new System.Random();
+        rand.Next();
+
+        // randomly set isLeft
+        isLeft = rand.Next(0, 2) == 0;
     }
 
     public bool playerDetected = false;
@@ -80,6 +91,16 @@ public class NPC_System : MonoBehaviour
                 }
             }
         }
+        if (left.playerEntered == true && !isLeft)
+        {
+            //change scene to lost game
+            SceneManager.LoadScene("LostGameTurn");
+        }
+        if (right.playerEntered == true && isLeft)
+        {
+            //change scene to lost game
+            SceneManager.LoadScene("LostGameTurn");
+        }
     }
 
     void NewDialog(string text)
@@ -91,8 +112,14 @@ public class NPC_System : MonoBehaviour
 
     void LoadDialoguesFromJSON()
     {
-        dialogues = JsonUtility.FromJson<DialogueData>(dialogueJSON.text);
-
+        if (isLeft)
+        {
+            dialogues = JsonUtility.FromJson<DialogueData>(dialogueJSONL.text);
+        }
+        else
+        {
+            dialogues = JsonUtility.FromJson<DialogueData>(dialogueJSONR.text);
+        }
         if (dialogues == null)
         {
             Debug.LogError("Failed to parse JSON data from the provided TextAsset.");
