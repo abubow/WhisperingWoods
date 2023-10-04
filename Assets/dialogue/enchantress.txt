@@ -1,0 +1,9 @@
+{
+    "name": "Mysterious Voice",
+    "dialogue": [
+        "In this enchanted forest, a choice you must make.",
+        "To find your way, a riddle I shall now create.",
+        "Listen closely, for the answer you must find.",
+        "'Two paths diverge, left or right, which leads to what you seek, so bright?'"
+    ]
+}

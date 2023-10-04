@@ -1,0 +1,9 @@
+{
+    "name": "Guardian of the Gate",
+    "dialogue": [
+        "Welcome, traveler, to the ancient gate of fate.",
+        "To pass through, a challenge I must create.",
+        "A riddle you must solve, your path to decide.",
+        "'To move ahead, answer this: which way should you stride? Left, right, forward, or back?'"
+    ]
+}
